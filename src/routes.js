@@ -31,15 +31,6 @@ function Root(props) {
               onPress={() => props.navigation.openDrawer()}
             />
           ),
-          headerRight: () => (
-            <Feather
-              style={{ marginLeft: 10 }}
-              name="more-vertical"
-              size={30}
-              color="#7D3C98"
-              onPress={() => props.navigation.openDrawer()}
-            />
-          ),
         }}
       />
     </Stack.Navigator>
