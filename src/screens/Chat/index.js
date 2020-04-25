@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { GiftedChat, Bubble, Send } from "react-native-gifted-chat";
 
@@ -7,22 +7,31 @@ import { Feather } from "@expo/vector-icons";
 import styles from "./styles";
 
 const Chat = () => {
-  const [messages, setMessages] = React.useState([
+  const BOT_USER = {
+    _id: 2,
+    name: "GiftedChat",
+    avatar: require("../../assets/profile.png"),
+  };
+  const [messages, setMessages] = useState([
     {
       _id: 1,
       text:
         "Hi, I'm Chevy. I came from another planet, but I've learned a little English. Shall we talk?",
       createdAt: new Date(),
-      user: {
-        _id: 2,
-        name: "GiftedChat",
-        avatar: require("../../assets/profile.png"),
-      },
+      user: BOT_USER,
     },
   ]);
 
-  const onSend = (newMessages) =>
+  const onSend = (newMessages) => {
+    let botResponseMessage = {
+      _id: messages.length + 1,
+      text: "Sorry, I still don't know what you mean, could you teach me?",
+      createdAt: new Date(),
+      user: BOT_USER,
+    };
+    newMessages.unshift(botResponseMessage);
     setMessages(GiftedChat.append(messages, newMessages));
+  };
 
   const renderBubble = (props) => {
     return (
