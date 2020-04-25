@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text } from "react-native";
+import { ScrollView, SafeAreaView, View, Image, Text } from "react-native";
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -8,13 +8,18 @@ import {
 
 import profileImage from "../../assets/profile.png";
 import data from "../../../package.json";
+import styles from "./styles";
 
 const CustomDrawerContent = (props) => {
   return (
     <DrawerContentScrollView {...props}>
+      <View style={styles.container}>
+        <Image style={styles.profile} source={profileImage} />
+        <Text> version: {data.version}</Text>
+      </View>
       <DrawerItemList {...props} />
       <DrawerItem
-        label="Help"
+        label="About"
         onPress={() => Linking.openUrl("https://mywebsite.com/help")}
       />
     </DrawerContentScrollView>

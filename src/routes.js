@@ -1,5 +1,5 @@
 import React from "react";
-import { Feather } from "@expo/vector-icons";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -51,9 +51,17 @@ export default function App() {
     <NavigationContainer theme={themeDefault}>
       <Drawer.Navigator
         initialRouteName="Home"
-        drawerContent={CustomDrawerContent}
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen name="Chat" component={Root} />
+        <Drawer.Screen
+          name="Chat"
+          component={Root}
+          options={{
+            drawerIcon: () => (
+              <Feather name="message-circle" size={25} color="#7D3C98" />
+            ),
+          }}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );
