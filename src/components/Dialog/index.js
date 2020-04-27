@@ -14,6 +14,7 @@ const Dialog = (props) => {
   const createActions = (
     <Card.Actions style={styles.cardActions}>
       <Button
+        color="#7D3C98"
         style={styles.actionsButton}
         mode="outlined"
         icon={({ size, color }) => (
@@ -29,6 +30,7 @@ const Dialog = (props) => {
   const evaluationActions = (
     <Card.Actions style={styles.cardActions}>
       <Button
+        color="#7D3C98"
         style={styles.actionsButton}
         mode="outlined"
         icon={({ size, color }) => (
@@ -39,6 +41,7 @@ const Dialog = (props) => {
         Approve
       </Button>
       <Button
+        color="#7D3C98"
         style={styles.actionsButton}
         mode="outlined"
         icon={({ size, color }) => (

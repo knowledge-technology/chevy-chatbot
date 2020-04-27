@@ -10,9 +10,11 @@ import CustomDrawerContent from "./components/CustomDrawerContent";
 
 import Chat from "./screens/Chat";
 import ManageDialogues from "./screens/ManageDialogues";
-import SuggestDialogues from "./screens/SuggestDialogues";
-import EvaluateDialogues from "./screens/EvaluateDialogues";
-import MyDialogues from "./screens/MyDialogues";
+import {
+  SuggestDialogues,
+  EvaluateDialogues,
+  MyDialogues,
+} from "./screens/ManageDialogues/Options";
 
 import { themeDefault, themeDark } from "./styles/Themes";
 
@@ -56,48 +58,9 @@ const ManageDialoguesRoot = (props) => {
           headerLeft: () => <DrawerMenuIcon {...props} />,
         }}
       />
-    </Stack.Navigator>
-  );
-};
-
-const EvaluateDialoguesRoot = (props) => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Evaluate Dialogues"
-        component={EvaluateDialogues}
-        options={{
-          headerLeft: () => <DrawerMenuIcon {...props} />,
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-
-const MyDialoguesRoot = (props) => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="My Dialogues"
-        component={MyDialogues}
-        options={{
-          headerLeft: () => <DrawerMenuIcon {...props} />,
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-
-const SuggestDialoguesRoot = (props) => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Suggest Dialogues"
-        component={SuggestDialogues}
-        options={{
-          headerLeft: () => <DrawerMenuIcon {...props} />,
-        }}
-      />
+      <Stack.Screen name="Suggest Dialogues" component={SuggestDialogues} />
+      <Stack.Screen name="Evaluate Dialogues" component={EvaluateDialogues} />
+      <Stack.Screen name="My Dialogues" component={MyDialogues} />
     </Stack.Navigator>
   );
 };
@@ -121,33 +84,6 @@ export default App = () => {
         <Drawer.Screen
           name="Manage Dialogues"
           component={ManageDialoguesRoot}
-          options={{
-            drawerIcon: ({ color, size }) => (
-              <Feather name="edit" size={size} color={color} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="Suggest Dialogues"
-          component={SuggestDialoguesRoot}
-          options={{
-            drawerIcon: ({ color, size }) => (
-              <Feather name="edit" size={size} color={color} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="Evaluate Dialogues"
-          component={EvaluateDialoguesRoot}
-          options={{
-            drawerIcon: ({ color, size }) => (
-              <Feather name="edit" size={size} color={color} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="My Dialogues"
-          component={MyDialoguesRoot}
           options={{
             drawerIcon: ({ color, size }) => (
               <Feather name="edit" size={size} color={color} />
