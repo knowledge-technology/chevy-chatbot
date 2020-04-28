@@ -10,7 +10,6 @@ import { Divider } from "react-native-paper";
 import { Feather } from "@expo/vector-icons";
 
 import profileImage from "../../assets/profile.png";
-import data from "../../../package.json";
 import styles from "./styles";
 
 const CustomDrawerContent = (props) => {
@@ -18,26 +17,17 @@ const CustomDrawerContent = (props) => {
     <DrawerContentScrollView {...props}>
       <View style={styles.container}>
         <Image style={styles.profile} source={profileImage} />
-        <Text> version: {data.version}</Text>
+        <Text>Chevy Chatbot</Text>
       </View>
       <Divider style={styles.divider} />
       <DrawerItemList {...props} />
-      <DrawerItem
-        label="About"
-        icon={({ color, size }) => (
-          <Feather name="info" size={size} color={color} />
-        )}
-        onPress={() => Linking.openUrl("https://mywebsite.com/help")}
-      />
       <Divider style={styles.divider} />
       <DrawerItem
         label="Logout"
         icon={({ color, size }) => (
           <Feather name="log-out" size={size} color={color} />
         )}
-        onPress={async () => {
-          props.navigation.navigate("Login");
-        }}
+        onPress={() => props.navigation.navigate("Login")}
       />
     </DrawerContentScrollView>
   );

@@ -26,7 +26,7 @@ const Chat = () => {
   const onSend = async (newMessages) => {
     let botResponseMessage = {
       _id: messages.length + 1,
-      text: t,
+      text: "Sorry, I still don't know what you mean, could you teach me?",
       createdAt: new Date(),
       user: BOT_USER,
     };

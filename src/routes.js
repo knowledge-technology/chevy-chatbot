@@ -10,6 +10,7 @@ import CustomDrawerContent from "./components/CustomDrawerContent";
 
 import Login from "./screens/Login";
 import Chat from "./screens/Chat";
+import About from "./screens/About";
 import ManageDialogues from "./screens/ManageDialogues";
 import {
   SuggestDialogues,
@@ -71,11 +72,24 @@ const ManageDialoguesRoot = (props) => {
   );
 };
 
+const AboutRoot = (props) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="About"
+        component={About}
+        options={{
+          headerLeft: () => <DrawerMenuIcon {...props} />,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 export default App = () => {
   return (
     <NavigationContainer theme={themeDefault}>
       <Drawer.Navigator
-        initialRouteName="Login"
+        initialRouteName="Chat"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen
@@ -93,6 +107,15 @@ export default App = () => {
           options={{
             drawerIcon: ({ color, size }) => (
               <Feather name="edit" size={size} color={color} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="About"
+          component={AboutRoot}
+          options={{
+            drawerIcon: ({ color, size }) => (
+              <Feather name="info" size={size} color={color} />
             ),
           }}
         />
