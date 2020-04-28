@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, AsyncStorage } from "react-native";
 import { GiftedChat, Bubble, Send } from "react-native-gifted-chat";
+import { AdMobBanner } from "expo-ads-admob";
 
 import { Feather } from "@expo/vector-icons";
 
@@ -68,9 +69,17 @@ const Chat = () => {
       </Send>
     );
   };
-
+  const bannerError = () => {
+    console.log("An error");
+    return;
+  };
   return (
     <View style={styles.container}>
+      <AdMobBanner
+        adUnitID="ca-app-pub-3940256099942544/6300978111" // "ca-app-pub-8494738329887200/6370263503"
+        testDeviceID="EMULATOR"
+        didFailToReceiveAdWithError={bannerError}
+      />
       <GiftedChat
         {...{ messages, onSend }}
         renderSend={renderSend}
