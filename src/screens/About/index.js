@@ -1,6 +1,12 @@
-import React, { useState } from "react";
-import { View, Image, Text } from "react-native";
-import { Headline, Subheading, Caption } from "react-native-paper";
+import React from "react";
+import { View, Image, Linking } from "react-native";
+import {
+  Modal,
+  Button,
+  Headline,
+  Subheading,
+  Caption,
+} from "react-native-paper";
 
 import profileImage from "../../assets/profile.png";
 import data from "../../../package.json";
@@ -15,6 +21,17 @@ const About = (props) => {
       <Caption> APP: {data.version} | API: 1.0.0 </Caption>
       <Subheading style={styles.description}>{data.description}</Subheading>
       <Caption> Developed by Matheus Barbosa © 2020. </Caption>
+      <Button
+        uppercase={false}
+        mode="text"
+        onPress={() =>
+          Linking.openURL(
+            "https://github.com/barbosamaatheus/chevy-chatbot/blob/master/PrivacyPolicy.md"
+          )
+        }
+      >
+        View privacy policy
+      </Button>
     </View>
   );
 };
