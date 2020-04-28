@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import CustomTitleContent from "./components/CustomTitleContent";
 import CustomDrawerContent from "./components/CustomDrawerContent";
 
+import Login from "./screens/Login";
 import Chat from "./screens/Chat";
 import ManageDialogues from "./screens/ManageDialogues";
 import {
@@ -36,6 +37,11 @@ const DrawerMenuIcon = (props) => {
 const ChatRoot = (props) => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Login"
+        component={Login}
+      />
       <Stack.Screen
         name="Chat"
         component={Chat}
@@ -69,7 +75,7 @@ export default App = () => {
   return (
     <NavigationContainer theme={themeDefault}>
       <Drawer.Navigator
-        initialRouteName="Chat"
+        initialRouteName="Login"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen

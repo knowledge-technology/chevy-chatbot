@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, AsyncStorage } from "react-native";
 import { GiftedChat, Bubble, Send } from "react-native-gifted-chat";
 
 import { Feather } from "@expo/vector-icons";
@@ -12,6 +12,7 @@ const Chat = () => {
     name: "GiftedChat",
     avatar: require("../../assets/profile.png"),
   };
+
   const [messages, setMessages] = useState([
     {
       _id: 1,
@@ -22,13 +23,14 @@ const Chat = () => {
     },
   ]);
 
-  const onSend = (newMessages) => {
+  const onSend = async (newMessages) => {
     let botResponseMessage = {
       _id: messages.length + 1,
-      text: "Sorry, I still don't know what you mean, could you teach me?",
+      text: t,
       createdAt: new Date(),
       user: BOT_USER,
     };
+
     newMessages.unshift(botResponseMessage);
     setMessages(GiftedChat.append(messages, newMessages));
   };

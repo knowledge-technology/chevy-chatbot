@@ -12,6 +12,10 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
+  divider: {
+    backgroundColor: "black",
+    marginBottom: 10,
+  },
 });
 
 export default styles;
