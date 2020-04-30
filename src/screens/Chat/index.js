@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { View, AsyncStorage } from "react-native";
+import { View, ActivityIndicator, ImageBackground } from "react-native";
 import { GiftedChat, Bubble, Send } from "react-native-gifted-chat";
-import { AdMobBanner } from "expo-ads-admob";
+import { setTestDeviceIDAsync, AdMobBanner } from "expo-ads-admob";
+import { useTheme } from "@react-navigation/native";
 
 import { Feather } from "@expo/vector-icons";
+
+import backgroundDefault from "../../assets/background-default.png";
+import backgroundDark from "../../assets/background-dark.png";
 
 import styles from "./styles";
 
 const Chat = () => {
+  const { dark } = useTheme();
+
+  useEffect(() => {
+    const setTestDevice = async () => await setTestDeviceIDAsync("EMULATOR");
+    setTestDevice();
+  }, []);
+
   const BOT_USER = {
     _id: 2,
     name: "GiftedChat",
@@ -77,17 +88,28 @@ const Chat = () => {
     <View style={styles.container}>
       <AdMobBanner
         adUnitID="ca-app-pub-3940256099942544/6300978111" // "ca-app-pub-8494738329887200/6370263503"
-        testDeviceID="EMULATOR"
         didFailToReceiveAdWithError={bannerError}
       />
-      <GiftedChat
-        {...{ messages, onSend }}
-        renderSend={renderSend}
-        renderBubble={renderBubble}
-        user={{
-          _id: 1,
+      <ImageBackground
+        source={dark ? backgroundDark : backgroundDefault}
+        style={{
+          flex: 1,
+          resizeMode: "cover",
+          justifyContent: "center",
         }}
-      />
+      >
+        <GiftedChat
+          {...{ messages, onSend }}
+          renderSend={renderSend}
+          renderBubble={renderBubble}
+          renderLoading={() => (
+            <ActivityIndicator size="large" color="#7D3C98" />
+          )}
+          user={{
+            _id: 1,
+          }}
+        />
+      </ImageBackground>
     </View>
   );
 };

@@ -71,7 +71,7 @@ const Dialog = (props) => {
             value={input}
             onChangeText={(text) => setInput({ text })}
             multiline
-            placeholder="When a user speaks ..."
+            placeholder="When someone speaks ..."
             placeholderTextColor="#f1f1f1"
             editable={editable}
             style={styles.input}

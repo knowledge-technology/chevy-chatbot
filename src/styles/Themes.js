@@ -11,7 +11,7 @@ const themeDark = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    primary: "#7D3C98",
+    primary: "#BB8FCE",
     text: "#F1F1F1",
   },
 };
