@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "@react-navigation/native";
 import { View, TextInput, Alert } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Card, Button, Caption } from "react-native-paper";
@@ -8,6 +9,7 @@ import api from "../../services/api";
 import styles from "./styles";
 
 const Dialog = (props) => {
+  const { colors } = useTheme();
   const { isEvaluation, editable, speech, answer } = props;
 
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +39,9 @@ const Dialog = (props) => {
   };
 
   const createActions = (
-    <Card.Actions style={styles.cardActions}>
+    <Card.Actions
+      style={[styles.cardActions, { backgroundColor: colors.secondary }]}
+    >
       <Button
         color="#7D3C98"
         loading={isLoading}
@@ -82,16 +86,27 @@ const Dialog = (props) => {
 
   const previewActions = (
     <Card.Actions style={styles.cardActions}>
-      <Caption>Created at: 04/2020</Caption>
-      <Caption>Status: approved</Caption>
-      <Caption>Approval Rate: 80%</Caption>
+      <Caption style={{ color: colors.textSecondary }}>
+        Created at: 04/2020
+      </Caption>
+      <Caption style={{ color: colors.textSecondary }}>
+        Status: approved
+      </Caption>
+      <Caption style={{ color: colors.textSecondary }}>
+        Approval Rate: 80%
+      </Caption>
     </Card.Actions>
   );
 
   return (
     <View style={styles.container}>
-      <Card>
-        <Card.Title title="Chevy Chatbot" subtitle="Dialog" />
+      <Card style={{ backgroundColor: colors.secondary }}>
+        <Card.Title
+          titleStyle={{ color: colors.text }}
+          subtitleStyle={{ color: colors.textSecondary }}
+          title="Chevy Chatbot"
+          subtitle="Dialog"
+        />
         <Card.Content>
           <TextInput
             value={input}

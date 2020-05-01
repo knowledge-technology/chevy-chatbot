@@ -1,8 +1,10 @@
 import React from "react";
 import { View, TouchableOpacity, Text, Image } from "react-native";
+import { useTheme } from "@react-navigation/native";
 import { Divider } from "react-native-paper";
 
 import styles from "./styles";
+import { color } from "react-native-reanimated";
 
 const data = [
   {
@@ -26,6 +28,7 @@ const data = [
 ];
 
 export default Factory = ({ navigation }) => {
+  const { colors } = useTheme();
   return (
     <View style={styles.constainer}>
       {data.map((item) => {
@@ -39,7 +42,11 @@ export default Factory = ({ navigation }) => {
               <Image style={styles.itemIcon} source={item.icon} />
               <View style={styles.itemTexts}>
                 <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.subtitle}>{item.subtitle}</Text>
+                <Text
+                  style={[styles.subtitle, { color: colors.textSecondary }]}
+                >
+                  {item.subtitle}
+                </Text>
               </View>
             </View>
             <Divider style={styles.divider} />

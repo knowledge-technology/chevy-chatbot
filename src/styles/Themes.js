@@ -5,6 +5,9 @@ const themeDefault = {
   colors: {
     ...DefaultTheme.colors,
     primary: "#7D3C98",
+    text: "#212121",
+    textSecondary: "#313131",
+    secondary: "#FFF",
   },
 };
 const themeDark = {
@@ -13,6 +16,8 @@ const themeDark = {
     ...DarkTheme.colors,
     primary: "#BB8FCE",
     text: "#F1F1F1",
+    textSecondary: "#818181",
+    secondary: "#212121",
   },
 };
 

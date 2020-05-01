@@ -8,12 +8,14 @@ import {
   AsyncStorage,
 } from "react-native";
 import * as Facebook from "expo-facebook";
+import { useTheme } from "@react-navigation/native";
 
 import api from "../../services/api";
 
 import styles from "./styles";
 
 export default App = ({ navigation }) => {
+  const { colors } = useTheme();
   const setDefaultHeaders = (res) => {
     const { token } = res.data;
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -84,7 +86,7 @@ export default App = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Image
         style={styles.image}
         source={require("../../assets/profile.png")}

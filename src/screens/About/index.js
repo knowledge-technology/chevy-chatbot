@@ -1,12 +1,7 @@
 import React from "react";
+import { useTheme } from "@react-navigation/native";
 import { View, Image, Linking } from "react-native";
-import {
-  Modal,
-  Button,
-  Headline,
-  Subheading,
-  Caption,
-} from "react-native-paper";
+import { Button, Headline, Subheading, Caption } from "react-native-paper";
 
 import profileImage from "../../assets/profile.png";
 import data from "../../../package.json";
@@ -14,13 +9,20 @@ import data from "../../../package.json";
 import styles from "./styles";
 
 const About = (props) => {
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
       <Image style={styles.profile} source={profileImage} />
-      <Headline>CHEVY CHATBOT</Headline>
-      <Caption> APP: {data.version} | API: 1.0.0 </Caption>
-      <Subheading style={styles.description}>{data.description}</Subheading>
-      <Caption> Developed by Matheus Barbosa © 2020. </Caption>
+      <Headline style={{ color: colors.text }}>CHEVY CHATBOT</Headline>
+      <Caption style={{ color: colors.textSecondary }}>
+        APP: {data.version} | API: 1.0.0{" "}
+      </Caption>
+      <Subheading style={[styles.description, { color: colors.text }]}>
+        {data.description}
+      </Subheading>
+      <Caption style={{ color: colors.textSecondary }}>
+        Developed by Matheus Barbosa © 2020.{" "}
+      </Caption>
       <Button
         uppercase={false}
         mode="text"

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { AsyncStorage } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -11,6 +12,7 @@ import CustomDrawerContent from "./components/CustomDrawerContent";
 import Login from "./screens/Login";
 import Chat from "./screens/Chat";
 import About from "./screens/About";
+import Settings from "./screens/Settings";
 import ManageDialogues from "./screens/ManageDialogues";
 import {
   SuggestDialogues,
@@ -85,9 +87,34 @@ const AboutRoot = (props) => {
     </Stack.Navigator>
   );
 };
-export default App = () => {
+const SettingsRoot = (props) => {
   return (
-    <NavigationContainer theme={themeDefault}>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          headerLeft: () => <DrawerMenuIcon {...props} />,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+export default App = () => {
+  const [theme, setTheme] = useState();
+
+  useEffect(() => {
+    const getTheme = async () => {
+      const themeData = await AsyncStorage.getItem("Dark");
+      const { dark } = JSON.parse(themeData);
+      console.log(themeDefault);
+      setTheme(dark);
+    };
+
+    getTheme();
+  }, []);
+  return (
+    <NavigationContainer theme={theme ? themeDark : themeDefault}>
       <Drawer.Navigator
         initialRouteName="Chat"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -107,6 +134,15 @@ export default App = () => {
           options={{
             drawerIcon: ({ color, size }) => (
               <Feather name="edit" size={size} color={color} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Settings"
+          component={SettingsRoot}
+          options={{
+            drawerIcon: ({ color, size }) => (
+              <Feather name="settings" size={size} color={color} />
             ),
           }}
         />
