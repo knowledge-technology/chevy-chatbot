@@ -1,26 +1,52 @@
-import React, { useState } from "react";
-import { View, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, TextInput, Alert } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Card, Button, Caption } from "react-native-paper";
+
+import api from "../../services/api";
 
 import styles from "./styles";
 
 const Dialog = (props) => {
-  const { isEvaluation, editable, speech = "", answer = "" } = props;
+  const { isEvaluation, editable, speech, answer } = props;
 
-  const [input, setInput] = useState(speech);
-  const [output, setOutput] = useState(answer);
+  const [isLoading, setIsLoading] = useState(false);
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+
+  useEffect(() => {
+    setInput(speech);
+    setOutput(answer);
+  }, []);
+
+  const handleCreate = async () => {
+    setIsLoading(true);
+
+    if (!input || !output) {
+      Alert.alert("Error", "Fill in all fields to continue");
+      setIsLoading(false);
+    } else {
+      await api
+        .post("/v1/dialog", { speech: input, answer: output })
+        .catch((e) => {
+          Alert("Error", e);
+        });
+
+      setIsLoading(false);
+    }
+  };
 
   const createActions = (
     <Card.Actions style={styles.cardActions}>
       <Button
         color="#7D3C98"
+        loading={isLoading}
         style={styles.actionsButton}
         mode="outlined"
         icon={({ size, color }) => (
           <Feather name="plus-circle" size={size} color={color} />
         )}
-        onPress={() => console.log("Pressed")}
+        onPress={handleCreate}
       >
         Create
       </Button>
@@ -69,7 +95,7 @@ const Dialog = (props) => {
         <Card.Content>
           <TextInput
             value={input}
-            onChangeText={(text) => setInput({ text })}
+            onChangeText={(text) => setInput(text)}
             multiline
             placeholder="When someone speaks ..."
             placeholderTextColor="#f1f1f1"
@@ -78,7 +104,7 @@ const Dialog = (props) => {
           />
           <TextInput
             value={output}
-            onChangeText={(text) => setOutput({ text })}
+            onChangeText={(text) => setOutput(text)}
             multiline
             placeholder="The Chevy will answer ..."
             placeholderTextColor="#f1f1f1"

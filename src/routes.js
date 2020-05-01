@@ -37,7 +37,7 @@ const DrawerMenuIcon = (props) => {
 
 const ChatRoot = (props) => {
   return (
-    <Stack.Navigator initialRouteName="Chat">
+    <Stack.Navigator>
       <Stack.Screen
         options={{ headerShown: false }}
         name="Login"
