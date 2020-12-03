@@ -10,7 +10,17 @@ import styles from "./styles";
 
 const Dialog = (props) => {
   const { colors } = useTheme();
-  const { isEvaluation, editable, speech, answer } = props;
+  const {
+    dialogId,
+    isEvaluation,
+    editable,
+    speech,
+    answer,
+    createdAt,
+    status,
+    approvalRate,
+    notEvaluateYet,
+  } = props;
 
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState("");
@@ -20,7 +30,22 @@ const Dialog = (props) => {
     setInput(speech);
     setOutput(answer);
   }, []);
-
+  const handleApprove = async () => {
+    try {
+      await api.put(`/v1/dialog/${dialogId}/approval`);
+      Alert.alert("Successful approval");
+    } catch (err) {
+      Alert.alert("Error", "Please try again later");
+    }
+  };
+  const handleDesapprove = async () => {
+    try {
+      await api.put(`/v1/dialog/${dialogId}/reject`);
+      Alert.alert("Successful Disapprove");
+    } catch (err) {
+      Alert.alert("Error", "Please try again later");
+    }
+  };
   const handleCreate = async () => {
     setIsLoading(true);
 
@@ -35,6 +60,9 @@ const Dialog = (props) => {
         });
 
       setIsLoading(false);
+      setInput("");
+      setOutput("");
+      Alert.alert("Suggestion sent", "Successful registration");
     }
   };
 
@@ -66,10 +94,11 @@ const Dialog = (props) => {
         icon={({ size, color }) => (
           <Feather name="thumbs-up" size={size} color={color} />
         )}
-        onPress={() => console.log("Pressed")}
+        onPress={handleApprove}
       >
         Approve
       </Button>
+
       <Button
         color="#7D3C98"
         style={styles.actionsButton}
@@ -77,7 +106,7 @@ const Dialog = (props) => {
         icon={({ size, color }) => (
           <Feather name="thumbs-down" size={size} color={color} />
         )}
-        onPress={() => console.log("Pressed")}
+        onPress={handleDesapprove}
       >
         Disapprove
       </Button>
@@ -87,13 +116,17 @@ const Dialog = (props) => {
   const previewActions = (
     <Card.Actions style={styles.cardActions}>
       <Caption style={{ color: colors.textSecondary }}>
-        Created at: 04/2020
+        Created at:{" "}
+        {Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "numeric",
+        }).format(new Date(createdAt))}
       </Caption>
       <Caption style={{ color: colors.textSecondary }}>
-        Status: approved
+        Status: {status}
       </Caption>
       <Caption style={{ color: colors.textSecondary }}>
-        Approval Rate: 80%
+        Approval Rate: {approvalRate}%
       </Caption>
     </Card.Actions>
   );
