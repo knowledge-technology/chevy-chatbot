@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, KeyboardAvoidingView } from "react-native";
 import { Input } from "react-native-elements";
 import { Button } from "react-native-paper";
 import * as Facebook from "expo-facebook";
@@ -53,18 +53,23 @@ const Login = ({ navigation }) => {
 
   async function handleSubmit() {
     setIsLoading(true);
-    const response = await api.get("/v1/authenticate", {
-      auth: {
-        username: email,
-        password,
-      },
-    });
+    try {
+      const response = await api.get("/v1/authenticate", {
+        auth: {
+          username: email,
+          password,
+        },
+      });
 
-    if (response.status === 200) {
-      setDefaultHeaders(response.data);
-      navigation.navigate("Chat");
+      if (response.status === 200) {
+        setDefaultHeaders(response.data);
+        navigation.navigate("Chat");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      Alert.alert("Login Error", "error");
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   async function facebookLogIn() {
@@ -121,9 +126,8 @@ const Login = ({ navigation }) => {
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.secondary }]}
     >
-      <Text style={[styles.title, { color: colors.text }]}>Login</Text>
-
       <View style={styles.form}>
+        <Text style={[styles.title, { color: colors.text }]}>Login</Text>
         <Input
           style={{ color: colors.text }}
           label="Email"
@@ -150,12 +154,7 @@ const Login = ({ navigation }) => {
           Log in
         </Button>
         <Text style={[styles.footerText, { color: colors.text }]}>or</Text>
-        <Button
-          loading={isLoading}
-          mode="contained"
-          color="#4267b2"
-          onPress={facebookLogIn}
-        >
+        <Button mode="contained" color="#4267b2" onPress={facebookLogIn}>
           Login with Facebook
         </Button>
       </View>

@@ -10,15 +10,19 @@ import imageDefalt from "../../../assets/not_found.png";
 export default function MyDialogues() {
   const [data, setData] = useState([]);
   const getData = async () => {
-    const userId = await AsyncStorage.getItem("userId");
+    try {
+      const userId = await AsyncStorage.getItem("userId");
 
-    const response = await api.get("/v1/dialog", {
-      params: {
-        user: userId,
-      },
-    });
+      const response = await api.get("/v1/dialog", {
+        params: {
+          user: userId,
+        },
+      });
 
-    setData(response.data.data);
+      setData(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     getData();
@@ -61,5 +65,8 @@ const styles = StyleSheet.create({
     width: 300,
     height: 600,
   },
-  textDefault: {},
+  textDefault: {
+    fontSize: 18,
+    color: "grey",
+  },
 });

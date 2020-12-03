@@ -24,6 +24,9 @@ const Dialog = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
+  const [approvalMode, setApprovalMode] = useState("outlined");
+  const [disapproveMode, setDisapproveMode] = useState("outlined");
+  const [hasEvaluate, setHasEvaluate] = useState(false);
 
   useEffect(() => {
     setInput(speech);
@@ -33,6 +36,8 @@ const Dialog = (props) => {
     try {
       await api.put(`/v1/dialog/${dialogId}/approval`);
       Alert.alert("Successful approval");
+      setHasEvaluate(true);
+      setApprovalMode("contained");
     } catch (err) {
       Alert.alert("Error", "Please try again later");
     }
@@ -41,6 +46,8 @@ const Dialog = (props) => {
     try {
       await api.put(`/v1/dialog/${dialogId}/reject`);
       Alert.alert("Successful Disapprove");
+      setHasEvaluate(true);
+      setDisapproveMode("contained");
     } catch (err) {
       Alert.alert("Error", "Please try again later");
     }
@@ -89,7 +96,8 @@ const Dialog = (props) => {
       <Button
         color="#7D3C98"
         style={styles.actionsButton}
-        mode="outlined"
+        disabled={hasEvaluate}
+        mode={approvalMode}
         icon={({ size, color }) => (
           <Feather name="thumbs-up" size={size} color={color} />
         )}
@@ -100,8 +108,9 @@ const Dialog = (props) => {
 
       <Button
         color="#7D3C98"
+        disabled={hasEvaluate}
         style={styles.actionsButton}
-        mode="outlined"
+        mode={disapproveMode}
         icon={({ size, color }) => (
           <Feather name="thumbs-down" size={size} color={color} />
         )}

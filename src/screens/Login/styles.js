@@ -9,17 +9,17 @@ const styles = StyleSheet.create({
     paddingTop: metrics.basePadding,
   },
   title: {
-    flex: 0.5,
+    flex: 1,
     marginVertical: metrics.tripleBaseMargin * 2,
     marginHorizontal: metrics.baseMargin,
     fontSize: 60,
     fontWeight: "bold",
   },
   form: {
-    flex: 1.3,
-    margin: metrics.baseMargin,
+    flex: 3,
+    marginHorizontal: metrics.baseMargin,
   },
-  footer: { flex: 0.2, alignItems: "center", justifyContent: "flex-end" },
+  footer: { flex: 1, alignItems: "center", justifyContent: "flex-end" },
   footerText: { textAlign: "center" },
 });
 

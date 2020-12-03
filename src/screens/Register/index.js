@@ -39,11 +39,11 @@ const Register = ({ navigation }) => {
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.secondary }]}
     >
-      <Text style={[styles.title, { color: colors.text }]}>
-        Create new account
-      </Text>
-
       <View style={styles.form}>
+        <Text style={[styles.title, { color: colors.text }]}>
+          Create new account
+        </Text>
+
         <Input
           style={{ color: colors.text }}
           label="Name"
