@@ -6,22 +6,21 @@ import { fonts, metrics } from "../../styles";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: metrics.basePadding,
   },
-
   title: {
-    flex: 0.5,
+    flex: 1,
     margin: metrics.baseMargin,
     fontSize: fonts.bigger,
     fontWeight: "bold",
     color: "white",
   },
   form: {
-    flex: 1.3,
+    flex: 3,
     margin: metrics.baseMargin,
   },
-  footer: { flex: 0.2, alignItems: "center", justifyContent: "flex-end" },
-  footerText: { textAlign: "center" },
+
+  footer: { flex: 1, alignItems: "center", justifyContent: "flex-end" },
+  footerText: { color: "white", textAlign: "center" },
 });
 
 export default styles;

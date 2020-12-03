@@ -2,11 +2,7 @@
   "expo": {
     "name": "Chevy Chabot",
     "slug": "Chevy",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,10 +14,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
+      "package": "com.knowledge.chevy",
+      "versionCode": 1,
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-8494738329887200~4318815237"
       }

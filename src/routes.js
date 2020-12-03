@@ -9,7 +9,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import CustomTitleContent from "./components/CustomTitleContent";
 import CustomDrawerContent from "./components/CustomDrawerContent";
 
+import AuthOrApp from "./screens/AuthOrApp";
 import Login from "./screens/Login";
+import Register from "./screens/Register";
 import Chat from "./screens/Chat";
 import About from "./screens/About";
 import Settings from "./screens/Settings";
@@ -44,6 +46,11 @@ const ChatRoot = (props) => {
         options={{ headerShown: false }}
         name="Login"
         component={Login}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Register"
+        component={Register}
       />
       <Stack.Screen
         name="Chat"
@@ -122,7 +129,7 @@ export default App = () => {
   return (
     <NavigationContainer theme={theme ? themeDark : themeDefault}>
       <Drawer.Navigator
-        initialRouteName="Chat"
+        initialRouteName="Login"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen

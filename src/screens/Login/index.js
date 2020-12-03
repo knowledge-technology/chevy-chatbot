@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import { Text, View, Image, TouchableOpacity, Alert } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, Text, Alert } from "react-native";
+import { Input } from "react-native-elements";
+import { Button } from "react-native-paper";
 import * as Facebook from "expo-facebook";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { useTheme } from "@react-navigation/native";
 
 import api from "../../services/api";
 
 import styles from "./styles";
 
-export default App = ({ navigation }) => {
+const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { colors } = useTheme();
   const setDefaultHeaders = async (res) => {
     const { token } = res.metadata;
@@ -17,6 +22,7 @@ export default App = ({ navigation }) => {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     await AsyncStorage.setItem("userId", userId);
   };
+
   const authenticate = async (userData) => {
     const apiResponse = await api.get("/v1/authenticate", {
       auth: {
@@ -30,7 +36,7 @@ export default App = ({ navigation }) => {
     }
   };
 
-  const AuthOrApp = async () => {
+  const verifyAuthOrApp = async () => {
     const json = await AsyncStorage.getItem("userData");
     const userData = JSON.parse(json) || {};
     if (json) {
@@ -38,7 +44,20 @@ export default App = ({ navigation }) => {
     }
   };
 
-  const facebookLogIn = async () => {
+  async function handleSubmit() {
+    const response = await api.get("/v1/authenticate", {
+      auth: {
+        username: email,
+        password,
+      },
+    });
+
+    if (response.status === 200) {
+      setDefaultHeaders(response.data);
+      navigation.navigate("Chat");
+    }
+  }
+  async function facebookLogIn() {
     try {
       await Facebook.initializeAsync("884194755386321");
 
@@ -55,7 +74,10 @@ export default App = ({ navigation }) => {
 
         const { id, name, email, picture } = await facebookResponse.json();
 
-        await authenticate({ email, password: id });
+        AsyncStorage.setItem(
+          "userData",
+          JSON.stringify({ email, password: id })
+        );
 
         const apiResponse = await api.post("/v1/register", {
           name,
@@ -66,37 +88,66 @@ export default App = ({ navigation }) => {
 
         if (apiResponse.status === 201) {
           setDefaultHeaders(apiResponse.data);
-
-          AsyncStorage.setItem(
-            "userData",
-            JSON.stringify({ email, password: id })
-          );
-
           navigation.navigate("Chat");
         } else {
           Alert.alert("App Login Error", apiResponse.data.error);
         }
       }
     } catch ({ message }) {
-      message = "Request failed with status code 400"
-        ? AuthOrApp()
+      message === "Request failed with status code 409"
+        ? verifyAuthOrApp()
         : Alert.alert("Facebook Login Error", `${message}`);
     }
-  };
+  }
 
   useState(() => {
-    AuthOrApp();
+    verifyAuthOrApp();
   }, []);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Image
-        style={styles.image}
-        source={require("../../assets/profile.png")}
-      />
-      <TouchableOpacity style={styles.loginBtn} onPress={facebookLogIn}>
-        <Text style={styles.textButton}>Login with Facebook</Text>
-      </TouchableOpacity>
+    <View style={[styles.container, { backgroundColor: colors.secondary }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Login</Text>
+
+      <View style={styles.form}>
+        <Input
+          style={{ color: colors.text }}
+          label="Email"
+          textContentType="emailAddress"
+          placeholder="email@email.com"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+        <Input
+          style={{ color: colors.text }}
+          label="Password"
+          placeholder="password"
+          textContentType="password"
+          value={password}
+          secureTextEntry
+          onChangeText={(text) => setPassword(text)}
+        />
+        <Button mode="contained" color={colors.primary} onPress={handleSubmit}>
+          Log in
+        </Button>
+        <Text style={[styles.footerText, { color: colors.text }]}>Or</Text>
+        <Button mode="contained" color="#4267b2" onPress={facebookLogIn}>
+          Login with Facebook
+        </Button>
+      </View>
+      <View style={styles.footer}>
+        <Text style={[styles.footerText, { color: colors.text }]}>
+          If you don't have an account:
+        </Text>
+        <Button
+          mode="text"
+          color={colors.primary}
+          onPress={() => navigation.navigate("Register")}
+        >
+          Make Your Registration
+        </Button>
+      </View>
     </View>
   );
 };
+
+export default Login;

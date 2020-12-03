@@ -7,6 +7,7 @@ import {
 } from "@react-navigation/drawer";
 import { Divider } from "react-native-paper";
 import { useTheme } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Feather } from "@expo/vector-icons";
 
@@ -30,7 +31,10 @@ const CustomDrawerContent = (props) => {
         icon={({ color, size }) => (
           <Feather name="log-out" size={size} color={color} />
         )}
-        onPress={() => props.navigation.navigate("Login")}
+        onPress={async () => {
+          await AsyncStorage.clear();
+          props.navigation.navigate("Login");
+        }}
       />
     </DrawerContentScrollView>
   );
