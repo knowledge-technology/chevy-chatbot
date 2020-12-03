@@ -6,13 +6,14 @@ import { fonts, metrics } from "../../styles";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: metrics.basePadding,
   },
   title: {
     flex: 1,
-    margin: metrics.baseMargin,
-    fontSize: fonts.bigger,
+    marginVertical: metrics.doubleBaseMargin,
+    marginHorizontal: metrics.baseMargin,
+    fontSize: 60,
     fontWeight: "bold",
-    color: "white",
   },
   form: {
     flex: 3,

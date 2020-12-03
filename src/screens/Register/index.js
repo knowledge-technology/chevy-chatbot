@@ -40,7 +40,7 @@ const Register = ({ navigation }) => {
       style={[styles.container, { backgroundColor: colors.secondary }]}
     >
       <Text style={[styles.title, { color: colors.text }]}>
-        Create a new account
+        Create new account
       </Text>
 
       <View style={styles.form}>

@@ -132,7 +132,7 @@ const Login = ({ navigation }) => {
         <Button mode="contained" color={colors.primary} onPress={handleSubmit}>
           Log in
         </Button>
-        <Text style={[styles.footerText, { color: colors.text }]}>Or</Text>
+        <Text style={[styles.footerText, { color: colors.text }]}>or</Text>
         <Button mode="contained" color="#4267b2" onPress={facebookLogIn}>
           Login with Facebook
         </Button>
