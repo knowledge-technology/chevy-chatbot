@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.0.43:3000",
+  baseURL: "https://english-talking-api-staging.herokuapp.com/",
 });
 
 export default api;

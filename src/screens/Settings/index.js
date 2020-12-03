@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "@react-navigation/native";
 
 import { List, Switch } from "react-native-paper";
 
 const Settings = (props) => {
   const { colors } = useTheme();
-  const [isSwitchOn, setIsSwitchOn] = useState({});
-
+  const [isSwitchOn, setIsSwitchOn] = useState({ dark: false });
   useEffect(() => {
     const getTheme = async () => {
       const themeData = await AsyncStorage.getItem("Dark");
-      setIsSwitchOn(JSON.parse(themeData));
+      if (themeData === null) {
+        const { dark } = { dark: false };
+        setIsSwitchOn(JSON.parse(dark));
+      } else {
+        const { dark } = JSON.parse(themeData);
+
+        setIsSwitchOn(JSON.parse(themeData));
+      }
     };
 
     getTheme();

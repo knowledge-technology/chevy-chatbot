@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Feather } from "@expo/vector-icons";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -101,14 +101,20 @@ const SettingsRoot = (props) => {
   );
 };
 export default App = () => {
-  const [theme, setTheme] = useState();
+  const [theme, setTheme] = useState(false);
 
   useEffect(() => {
     const getTheme = async () => {
       const themeData = await AsyncStorage.getItem("Dark");
-      const { dark } = JSON.parse(themeData);
-      console.log(themeDefault);
-      setTheme(dark);
+      if (themeData === null) {
+        const { dark } = { dark: false };
+
+        setTheme(dark);
+      } else {
+        const { dark } = JSON.parse(themeData);
+
+        setTheme(dark);
+      }
     };
 
     getTheme();
