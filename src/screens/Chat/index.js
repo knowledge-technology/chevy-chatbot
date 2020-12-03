@@ -9,6 +9,8 @@ import { Feather } from "@expo/vector-icons";
 import backgroundDefault from "../../assets/background-default.png";
 import backgroundDark from "../../assets/background-dark.png";
 
+import api from "../../services/api";
+
 import styles from "./styles";
 
 const Chat = () => {
@@ -36,12 +38,31 @@ const Chat = () => {
   ]);
 
   const onSend = async (newMessages) => {
-    let botResponseMessage = {
-      _id: messages.length + 1,
-      text: "Sorry, I still don't know what you mean, could you teach me?",
-      createdAt: new Date(),
-      user: BOT_USER,
-    };
+    let botResponseMessage = {};
+    try {
+      const res = await api.get("v1/dialog", {
+        params: {
+          speech: newMessages[0].text,
+        },
+      });
+      if (res.status === 200) {
+        botResponseMessage = {
+          _id: messages.length + 1,
+          text: res.data.data[0].answer,
+          createdAt: new Date(),
+          user: BOT_USER,
+        };
+      }
+    } catch (err) {
+      botResponseMessage = {
+        _id: messages.length + 1,
+        text:
+          "Sorry, I still don't know what you mean, could you teach me? Please access the Manage Dialogs menu",
+        createdAt: new Date(),
+        user: BOT_USER,
+      };
+      console.log(err);
+    }
 
     newMessages.unshift(botResponseMessage);
     setMessages(GiftedChat.append(messages, newMessages));
