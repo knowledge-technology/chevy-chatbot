@@ -32,7 +32,6 @@ export default App = ({ navigation }) => {
       .catch((e) => {
         console.log(e);
       });
-
     if (apiResponse.status === 200) {
       setDefaultHeaders(apiResponse.data);
       navigation.navigate("Chat");

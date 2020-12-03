@@ -12,14 +12,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    margin: 20,
+    elevation: 5,
   },
   itemIcon: {
+    resizeMode: "cover",
+    borderRadius: 30,
     width: 100,
     height: 100,
+
+    marginLeft: 36,
   },
   itemTexts: {
     flex: 1,
-    padding: 20,
+
+    paddingLeft: 0,
     marginVertical: 8,
     marginHorizontal: 16,
   },

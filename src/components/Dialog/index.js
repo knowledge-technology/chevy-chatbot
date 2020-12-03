@@ -16,10 +16,9 @@ const Dialog = (props) => {
     editable,
     speech,
     answer,
-    createdAt,
+    createdAt = Date.now(),
     status,
     approvalRate,
-    notEvaluateYet,
   } = props;
 
   const [isLoading, setIsLoading] = useState(false);
