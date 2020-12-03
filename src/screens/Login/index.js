@@ -17,24 +17,24 @@ export default App = ({ navigation }) => {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     await AsyncStorage.setItem("userId", userId);
   };
+  const authenticate = async (userData) => {
+    const apiResponse = await api.get("/v1/authenticate", {
+      auth: {
+        username: userData.email,
+        password: userData.password,
+      },
+    });
+    if (apiResponse.status === 200) {
+      setDefaultHeaders(apiResponse.data);
+      navigation.navigate("Chat");
+    }
+  };
 
   const AuthOrApp = async () => {
     const json = await AsyncStorage.getItem("userData");
     const userData = JSON.parse(json) || {};
-
-    const apiResponse = await api
-      .get("/v1/authenticate", {
-        auth: {
-          username: userData.email,
-          password: userData.password,
-        },
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    if (apiResponse.status === 200) {
-      setDefaultHeaders(apiResponse.data);
-      navigation.navigate("Chat");
+    if (json) {
+      await authenticate(userData);
     }
   };
 
@@ -55,6 +55,8 @@ export default App = ({ navigation }) => {
 
         const { id, name, email, picture } = await facebookResponse.json();
 
+        await authenticate({ email, password: id });
+
         const apiResponse = await api.post("/v1/register", {
           name,
           picture: picture.data.url,
@@ -63,7 +65,7 @@ export default App = ({ navigation }) => {
         });
 
         if (apiResponse.status === 201) {
-          setDefaultHeaders(apiResponse);
+          setDefaultHeaders(apiResponse.data);
 
           AsyncStorage.setItem(
             "userData",
