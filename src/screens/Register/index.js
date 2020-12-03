@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { View, Text, Alert, SafeAreaView } from "react-native";
 import { Input } from "react-native-elements";
 import { Button } from "react-native-paper";
 import { useTheme } from "@react-navigation/native";
@@ -42,7 +36,9 @@ const Register = ({ navigation }) => {
     }
   };
   return (
-    <View style={[styles.container, { backgroundColor: colors.secondary }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.secondary }]}
+    >
       <Text style={[styles.title, { color: colors.text }]}>
         Create a new account
       </Text>
@@ -95,7 +91,7 @@ const Register = ({ navigation }) => {
           Go to Login
         </Button>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

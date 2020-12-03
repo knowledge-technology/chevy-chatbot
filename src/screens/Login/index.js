@@ -10,6 +10,7 @@ import { useTheme } from "@react-navigation/native";
 import api from "../../services/api";
 
 import styles from "./styles";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -105,7 +106,9 @@ const Login = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.secondary }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.secondary }]}
+    >
       <Text style={[styles.title, { color: colors.text }]}>Login</Text>
 
       <View style={styles.form}>
@@ -146,7 +149,7 @@ const Login = ({ navigation }) => {
           Make Your Registration
         </Button>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

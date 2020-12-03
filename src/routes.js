@@ -9,7 +9,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import CustomTitleContent from "./components/CustomTitleContent";
 import CustomDrawerContent from "./components/CustomDrawerContent";
 
-import AuthOrApp from "./screens/AuthOrApp";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import Chat from "./screens/Chat";
