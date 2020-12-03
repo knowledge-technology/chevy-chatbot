@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Alert,
-  AsyncStorage,
-} from "react-native";
+import { Text, View, Image, TouchableOpacity, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Facebook from "expo-facebook";
 import { useTheme } from "@react-navigation/native";
 
@@ -16,9 +10,12 @@ import styles from "./styles";
 
 export default App = ({ navigation }) => {
   const { colors } = useTheme();
-  const setDefaultHeaders = (res) => {
-    const { token } = res.data;
+  const setDefaultHeaders = async (res) => {
+    const { token } = res.metadata;
+    const userId = res.data.user._id;
+
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    await AsyncStorage.setItem("userId", userId);
   };
 
   const AuthOrApp = async () => {
@@ -26,13 +23,18 @@ export default App = ({ navigation }) => {
     const userData = JSON.parse(json) || {};
 
     const apiResponse = await api
-      .post("/v1/authenticate", userData)
+      .get("/v1/authenticate", {
+        auth: {
+          username: userData.email,
+          password: userData.password,
+        },
+      })
       .catch((e) => {
         console.log(e);
       });
 
     if (apiResponse.status === 200) {
-      setDefaultHeaders(apiResponse);
+      setDefaultHeaders(apiResponse.data);
       navigation.navigate("Chat");
     }
   };
