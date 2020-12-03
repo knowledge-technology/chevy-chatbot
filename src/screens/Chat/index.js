@@ -43,6 +43,7 @@ const Chat = () => {
       const res = await api.get("v1/dialog", {
         params: {
           speech: newMessages[0].text,
+          status: "approved",
         },
       });
       if (res.status === 200) {

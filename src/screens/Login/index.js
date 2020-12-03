@@ -15,7 +15,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const { colors } = useTheme();
+
   const setDefaultHeaders = async (res) => {
     const { token } = res.metadata;
     const userId = res.data.user._id;
@@ -31,6 +35,7 @@ const Login = ({ navigation }) => {
         password: userData.password,
       },
     });
+
     if (apiResponse.status === 200) {
       setDefaultHeaders(apiResponse.data);
       navigation.navigate("Chat");
@@ -40,12 +45,14 @@ const Login = ({ navigation }) => {
   const verifyAuthOrApp = async () => {
     const json = await AsyncStorage.getItem("userData");
     const userData = JSON.parse(json) || {};
+
     if (json) {
       await authenticate(userData);
     }
   };
 
   async function handleSubmit() {
+    setIsLoading(true);
     const response = await api.get("/v1/authenticate", {
       auth: {
         username: email,
@@ -57,8 +64,11 @@ const Login = ({ navigation }) => {
       setDefaultHeaders(response.data);
       navigation.navigate("Chat");
     }
+    setIsLoading(false);
   }
+
   async function facebookLogIn() {
+    setIsLoading(true);
     try {
       await Facebook.initializeAsync("884194755386321");
 
@@ -91,10 +101,12 @@ const Login = ({ navigation }) => {
           setDefaultHeaders(apiResponse.data);
           navigation.navigate("Chat");
         } else {
+          setIsLoading(false);
           Alert.alert("App Login Error", apiResponse.data.error);
         }
       }
     } catch ({ message }) {
+      setIsLoading(false);
       message === "Request failed with status code 409"
         ? verifyAuthOrApp()
         : Alert.alert("Facebook Login Error", `${message}`);
@@ -129,11 +141,21 @@ const Login = ({ navigation }) => {
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
         />
-        <Button mode="contained" color={colors.primary} onPress={handleSubmit}>
+        <Button
+          loading={isLoading}
+          mode="contained"
+          color={colors.primary}
+          onPress={handleSubmit}
+        >
           Log in
         </Button>
         <Text style={[styles.footerText, { color: colors.text }]}>or</Text>
-        <Button mode="contained" color="#4267b2" onPress={facebookLogIn}>
+        <Button
+          loading={isLoading}
+          mode="contained"
+          color="#4267b2"
+          onPress={facebookLogIn}
+        >
           Login with Facebook
         </Button>
       </View>
