@@ -46,10 +46,13 @@ const Chat = () => {
           status: "approved",
         },
       });
+
+      const dialogs = res.data.data;
+
       if (res.status === 200) {
         botResponseMessage = {
           _id: messages.length + 1,
-          text: res.data.data[0].answer,
+          text: dialogs[Math.floor(Math.random() * dialogs.length)].answer,
           createdAt: new Date(),
           user: BOT_USER,
         };

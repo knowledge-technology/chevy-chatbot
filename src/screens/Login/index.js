@@ -67,8 +67,8 @@ const Login = ({ navigation }) => {
         navigation.replace("Chat");
         setIsLoading(false);
       }
-    } catch (error) {
-      Alert.alert("Login Error", "error");
+    } catch ({ message }) {
+      Alert.alert("Login Error", message);
       setIsLoading(false);
     }
   }
