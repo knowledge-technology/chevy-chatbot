@@ -20,40 +20,41 @@ const Login = ({ navigation }) => {
 
   const { colors } = useTheme();
 
-  const setDefaultHeaders = async (res) => {
+  async function setDefaultHeaders(res) {
     const { token } = res.metadata;
     const userId = res.data.user._id;
 
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     await AsyncStorage.setItem("userId", userId);
-  };
+  }
 
-  const authenticate = async (userData) => {
-    const apiResponse = await api.get("/v1/authenticate", {
-      auth: {
-        username: userData.email,
-        password: userData.password,
-      },
-    });
-
-    if (apiResponse.status === 200) {
-      setDefaultHeaders(apiResponse.data);
-      navigation.navigate("Chat");
-    }
-  };
-
-  const verifyAuthOrApp = async () => {
+  async function verifyAuthOrApp() {
     const json = await AsyncStorage.getItem("userData");
     const userData = JSON.parse(json) || {};
 
     if (json) {
-      await authenticate(userData);
+      const apiResponse = await api.get("/v1/authenticate", {
+        auth: {
+          username: userData.email,
+          password: userData.password,
+        },
+      });
+
+      if (apiResponse.status === 200) {
+        setDefaultHeaders(apiResponse.data);
+        navigation.navigate("Chat");
+      }
     }
-  };
+  }
 
   async function handleSubmit() {
     setIsLoading(true);
     try {
+      await AsyncStorage.setItem(
+        "userData",
+        JSON.stringify({ email, password })
+      );
+
       const response = await api.get("/v1/authenticate", {
         auth: {
           username: email,
@@ -90,7 +91,7 @@ const Login = ({ navigation }) => {
 
         const { id, name, email, picture } = await facebookResponse.json();
 
-        AsyncStorage.setItem(
+        await AsyncStorage.setItem(
           "userData",
           JSON.stringify({ email, password: id })
         );

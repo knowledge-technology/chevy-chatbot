@@ -124,7 +124,7 @@ const Dialog = (props) => {
   const previewActions = (
     <Card.Actions style={styles.cardActions}>
       <Caption style={{ color: colors.textSecondary }}>
-        Created at:{" "}
+        Created at:
         {Intl.DateTimeFormat("en-US", {
           year: "numeric",
           month: "numeric",
