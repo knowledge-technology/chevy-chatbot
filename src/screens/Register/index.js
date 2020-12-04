@@ -30,9 +30,9 @@ const Register = ({ navigation }) => {
       await api.post("/v1/register", data);
       navigation.navigate("Login");
       setIsLoading(false);
-    } catch (err) {
+    } catch ({ message }) {
       setIsLoading(false);
-      Alert.alert("Error", "Error when registering");
+      Alert.alert("Error", message);
     }
   };
   return (

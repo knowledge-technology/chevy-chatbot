@@ -22,7 +22,8 @@ export default function EvaluateDialogues({ route }) {
       if (
         !(
           response.data.data[i].approvals.includes(userId) ||
-          response.data.data[i].disapprovals.includes(userId)
+          response.data.data[i].disapprovals.includes(userId) ||
+          response.data.data[i].user === userId
         )
       ) {
         filterData.push(response.data.data[i]);

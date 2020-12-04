@@ -42,7 +42,7 @@ const Login = ({ navigation }) => {
 
       if (apiResponse.status === 200) {
         setDefaultHeaders(apiResponse.data);
-        navigation.navigate("Chat");
+        navigation.replace("Chat");
       }
     }
   }
@@ -64,7 +64,7 @@ const Login = ({ navigation }) => {
 
       if (response.status === 200) {
         setDefaultHeaders(response.data);
-        navigation.navigate("Chat");
+        navigation.replace("Chat");
         setIsLoading(false);
       }
     } catch (error) {
@@ -74,7 +74,6 @@ const Login = ({ navigation }) => {
   }
 
   async function facebookLogIn() {
-    setIsLoading(true);
     try {
       await Facebook.initializeAsync("884194755386321");
 
@@ -83,6 +82,7 @@ const Login = ({ navigation }) => {
       });
 
       if (type === "success") {
+        setIsLoading(true);
         const facebookUrl = `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.type(large)`;
 
         const facebookResponse = await fetch(facebookUrl).catch((e) =>
@@ -105,7 +105,7 @@ const Login = ({ navigation }) => {
 
         if (apiResponse.status === 201) {
           setDefaultHeaders(apiResponse.data);
-          navigation.navigate("Chat");
+          navigation.replace("Chat");
         } else {
           setIsLoading(false);
           Alert.alert("App Login Error", apiResponse.data.error);
