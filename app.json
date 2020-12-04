@@ -2,11 +2,7 @@
   "expo": {
     "name": "Chevy Chabot",
     "slug": "Chevy",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.knowledge.chevy",
       "versionCode": 1,
@@ -35,6 +29,6 @@
       }
     },
     "description": "The Chevy Chatbot aims to provide users with the possibility of conducting dialogues in English where the conversations and answers are registered and evaluated by the users themselves.",
-    "githubUrl": "https://github.com/barbosamaatheus/chevy-chatbot"
+    "githubUrl": "https://github.com/knowledge-corporation/chevy-chatbot"
   }
 }

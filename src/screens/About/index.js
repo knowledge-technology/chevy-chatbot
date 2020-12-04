@@ -28,7 +28,7 @@ const About = (props) => {
         mode="text"
         onPress={() =>
           Linking.openURL(
-            "https://github.com/barbosamaatheus/chevy-chatbot/blob/master/PrivacyPolicy.md"
+            "https://github.com/knowledge-corporation/chevy-chatbot/blob/master/PrivacyPolicy.md"
           )
         }
       >
