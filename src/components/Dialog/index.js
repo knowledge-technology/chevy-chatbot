@@ -3,6 +3,7 @@ import { useTheme } from "@react-navigation/native";
 import { View, TextInput, Alert } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Card, Button, Caption } from "react-native-paper";
+import Moment from 'moment';
 
 import api from "../../services/api";
 
@@ -124,11 +125,7 @@ const Dialog = (props) => {
   const previewActions = (
     <Card.Actions style={styles.cardActions}>
       <Caption style={{ color: colors.textSecondary }}>
-        Created at:
-        {Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "numeric",
-        }).format(new Date(createdAt))}
+        Created at: {Moment(new Date(createdAt)).locale("en").format('MM/YYYY')}       
       </Caption>
       <Caption style={{ color: colors.textSecondary }}>
         Status: {status}

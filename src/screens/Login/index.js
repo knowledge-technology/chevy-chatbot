@@ -75,7 +75,9 @@ const Login = ({ navigation }) => {
 
   async function facebookLogIn() {
     try {
-      await Facebook.initializeAsync("884194755386321");
+      await Facebook.initializeAsync({
+        appId: "884194755386321",
+      });
 
       const { type, token } = await Facebook.logInWithReadPermissionsAsync({
         permissions: ["public_profile", "email"],
