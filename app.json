@@ -25,6 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
+      "permissions": [],
       "package": "com.knowledge.chevy",
       "versionCode": 1,
       "config": {
