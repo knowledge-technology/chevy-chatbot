@@ -22,7 +22,7 @@ const Login = ({ navigation }) => {
 
   async function setDefaultHeaders(res) {
     const { token } = res.metadata;
-    const userId = res.data.user._id;
+    const userId = res.data.id;
 
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     await AsyncStorage.setItem("userId", userId);
