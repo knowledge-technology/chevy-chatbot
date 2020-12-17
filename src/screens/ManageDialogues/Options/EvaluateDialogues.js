@@ -23,7 +23,7 @@ export default function EvaluateDialogues({ route }) {
         !(
           response.data.data[i].approvals.includes(userId) ||
           response.data.data[i].disapprovals.includes(userId) ||
-          response.data.data[i].user === userId
+          response.data.data[i].owner === userId
         )
       ) {
         filterData.push(response.data.data[i]);
@@ -46,7 +46,7 @@ export default function EvaluateDialogues({ route }) {
           onEndReachedThreshold={0.2}
           renderItem={({ item }) => (
             <Dialog
-              dialogId={item._id}
+              dialogId={item.id}
               speech={item.speech}
               answer={item.answer}
               createdAt={item.createdAt}
@@ -54,7 +54,7 @@ export default function EvaluateDialogues({ route }) {
               editable={false}
             />
           )}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item.id}
         />
       ) : (
         <View style={styles.viewDefault}>

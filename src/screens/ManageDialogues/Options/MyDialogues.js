@@ -15,7 +15,7 @@ export default function MyDialogues() {
 
       const response = await api.get("/v1/dialog", {
         params: {
-          user: userId,
+          owner: userId,
         },
       });
 
@@ -39,11 +39,11 @@ export default function MyDialogues() {
               answer={item.answer}
               createdAt={item.createdAt}
               status={item.status}
-              approvalRate={item.approval_rate}
+              approvalRate={item.approvalRate}
               editable={false}
             />
           )}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item.id}
         />
       ) : (
         <View style={styles.viewDefault}>

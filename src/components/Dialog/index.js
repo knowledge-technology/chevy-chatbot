@@ -3,7 +3,7 @@ import { useTheme } from "@react-navigation/native";
 import { View, TextInput, Alert } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Card, Button, Caption } from "react-native-paper";
-import Moment from 'moment';
+import Moment from "moment";
 
 import api from "../../services/api";
 
@@ -33,6 +33,7 @@ const Dialog = (props) => {
     setInput(speech);
     setOutput(answer);
   }, []);
+
   const handleApprove = async () => {
     try {
       await api.put(`/v1/dialog/${dialogId}/approval`);
@@ -43,6 +44,7 @@ const Dialog = (props) => {
       Alert.alert("Error", "Please try again later");
     }
   };
+
   const handleDesapprove = async () => {
     try {
       await api.put(`/v1/dialog/${dialogId}/reject`);
@@ -53,6 +55,7 @@ const Dialog = (props) => {
       Alert.alert("Error", "Please try again later");
     }
   };
+
   const handleCreate = async () => {
     setIsLoading(true);
 
@@ -125,7 +128,7 @@ const Dialog = (props) => {
   const previewActions = (
     <Card.Actions style={styles.cardActions}>
       <Caption style={{ color: colors.textSecondary }}>
-        Created at: {Moment(new Date(createdAt)).locale("en").format('MM/YYYY')}       
+        Created at: {Moment(new Date(createdAt)).locale("en").format("MM/YYYY")}
       </Caption>
       <Caption style={{ color: colors.textSecondary }}>
         Status: {status}
