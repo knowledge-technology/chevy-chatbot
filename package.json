@@ -1,7 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "name": "chevy-chatbot",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "The Chevy Chatbot aims to provide users with the possibility of conducting dialogues in English where the conversations and answers are registered and evaluated by the users themselves.",
   "scripts": {
     "start": "expo start",
