@@ -9,10 +9,9 @@ const styles = StyleSheet.create({
     paddingTop: metrics.basePadding,
   },
   title: {
-    flex: 1,
     marginVertical: metrics.doubleBaseMargin,
     marginHorizontal: metrics.baseMargin,
-    fontSize: 60,
+    fontSize: fonts.bigger,
     fontWeight: "bold",
   },
   form: {
@@ -20,7 +19,10 @@ const styles = StyleSheet.create({
     margin: metrics.baseMargin,
   },
 
-  footer: { flex: 1, alignItems: "center", justifyContent: "flex-end" },
+  footer: {
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
   footerText: { color: "white", textAlign: "center" },
 });
 

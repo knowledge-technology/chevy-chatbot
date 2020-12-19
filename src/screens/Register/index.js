@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, Alert, SafeAreaView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Alert, SafeAreaView, Keyboard } from "react-native";
 import { Input } from "react-native-elements";
 import { Button } from "react-native-paper";
 import { useTheme } from "@react-navigation/native";
@@ -14,6 +14,7 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [keyboardShow, setKeyboardShow] = useState(false);
 
   const { colors } = useTheme();
 
@@ -35,6 +36,26 @@ const Register = ({ navigation }) => {
       Alert.alert("Error", message);
     }
   };
+
+  useEffect(() => {
+    Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+    Keyboard.addListener("keyboardDidHide", keyboardDidHide);
+
+    // cleanup function
+    return () => {
+      Keyboard.removeListener("keyboardDidShow", keyboardDidShow);
+      Keyboard.removeListener("keyboardDidHide", keyboardDidHide);
+    };
+  }, []);
+
+  const keyboardDidShow = () => {
+    setKeyboardShow(true);
+  };
+
+  const keyboardDidHide = () => {
+    setKeyboardShow(false);
+  };
+
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.secondary }]}
@@ -43,31 +64,36 @@ const Register = ({ navigation }) => {
         <Text style={[styles.title, { color: colors.text }]}>
           Create new account
         </Text>
-
         <Input
           style={{ color: colors.text }}
           label="Name"
-          placeholder="your name"
+          textContentType="name"
+          placeholder="your full name"
           value={name}
+          autoCapitalize="words"
           onChangeText={(text) => setName(text)}
         />
         <Input
           style={{ color: colors.text }}
           label="Email"
+          keyboardType="email-address"
           textContentType="emailAddress"
           placeholder="email@mail.com"
+          autoCapitalize="none"
           value={email}
           onChangeText={(text) => setEmail(text)}
         />
         <Input
           style={{ color: colors.text }}
           label="Password"
+          autoCapitalize="none"
           placeholder="password"
           textContentType="password"
           value={password}
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
         />
+
         <Button
           style={styles.buttons}
           mode="contained"
@@ -78,19 +104,20 @@ const Register = ({ navigation }) => {
           Register
         </Button>
       </View>
-
-      <View style={styles.footer}>
-        <Text style={[styles.footerText, { color: colors.text }]}>
-          If you already have an account:
-        </Text>
-        <Button
-          mode="text"
-          color={colors.primary}
-          onPress={() => navigation.navigate("Login")}
-        >
-          Go to Login
-        </Button>
-      </View>
+      {keyboardShow || (
+        <View style={styles.footer}>
+          <Text style={[styles.footerText, { color: colors.text }]}>
+            If you already have an account:
+          </Text>
+          <Button
+            mode="text"
+            color={colors.primary}
+            onPress={() => navigation.navigate("Login")}
+          >
+            Go to Login
+          </Button>
+        </View>
+      )}
     </SafeAreaView>
   );
 };

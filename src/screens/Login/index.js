@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, Alert, KeyboardAvoidingView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Alert, Keyboard } from "react-native";
 import { Input } from "react-native-elements";
 import { Button } from "react-native-paper";
 import * as Facebook from "expo-facebook";
@@ -17,6 +17,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [keyboardShow, setKeyboardShow] = useState(false);
 
   const { colors } = useTheme();
 
@@ -121,8 +122,24 @@ const Login = ({ navigation }) => {
     }
   }
 
-  useState(() => {
+  const keyboardDidShow = () => {
+    setKeyboardShow(true);
+  };
+
+  const keyboardDidHide = () => {
+    setKeyboardShow(false);
+  };
+
+  useEffect(() => {
     verifyAuthOrApp();
+    Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+    Keyboard.addListener("keyboardDidHide", keyboardDidHide);
+
+    // cleanup function
+    return () => {
+      Keyboard.removeListener("keyboardDidShow", keyboardDidShow);
+      Keyboard.removeListener("keyboardDidHide", keyboardDidHide);
+    };
   }, []);
 
   return (
@@ -134,14 +151,17 @@ const Login = ({ navigation }) => {
         <Input
           style={{ color: colors.text }}
           label="Email"
+          keyboardType="email-address"
           textContentType="emailAddress"
-          placeholder="email@email.com"
+          placeholder="email@mail.com"
+          autoCapitalize="none"
           value={email}
           onChangeText={(text) => setEmail(text)}
         />
         <Input
           style={{ color: colors.text }}
           label="Password"
+          autoCapitalize="none"
           placeholder="password"
           textContentType="password"
           value={password}
@@ -161,18 +181,21 @@ const Login = ({ navigation }) => {
           Login with Facebook
         </Button>
       </View>
-      <View style={styles.footer}>
-        <Text style={[styles.footerText, { color: colors.text }]}>
-          If you don't have an account:
-        </Text>
-        <Button
-          mode="text"
-          color={colors.primary}
-          onPress={() => navigation.navigate("Register")}
-        >
-          Make Your Registration
-        </Button>
-      </View>
+
+      {keyboardShow || (
+        <View style={styles.footer}>
+          <Text style={[styles.footerText, { color: colors.text }]}>
+            If you don't have an account:
+          </Text>
+          <Button
+            mode="text"
+            color={colors.primary}
+            onPress={() => navigation.navigate("Register")}
+          >
+            Make Your Registration
+          </Button>
+        </View>
+      )}
     </SafeAreaView>
   );
 };

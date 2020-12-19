@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image, Text, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { HeaderBackButton } from "@react-navigation/stack";
+import { AdMobInterstitial, setTestDeviceIDAsync } from "expo-ads-admob";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -8,16 +11,17 @@ import imageDefalt from "../../../assets/not_found.png";
 
 import api from "../../../services/api";
 
-export default function EvaluateDialogues({ route }) {
-  const [data, setData] = useState([]);
+export default function EvaluateDialogues() {
+  const [dialogs, setDialogs] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  const loadData = async () => {
+  const navigation = useNavigation();
+
+  async function filterDialogs(response) {
     const userId = await AsyncStorage.getItem("userId");
     const filterData = [];
-    const response = await api.get("/v1/dialog", {
-      headers: { page: 1, limit: 10 },
-    });
-
     for (var i = 0; i < response.data.data.length; i++) {
       if (
         !(
@@ -29,18 +33,74 @@ export default function EvaluateDialogues({ route }) {
         filterData.push(response.data.data[i]);
       }
     }
-    setData(filterData);
+    return filterData;
+  }
+
+  const loadData = async () => {
+    if (loading) {
+      return;
+    }
+    if (total > 0 && dialogs.length === total) {
+      return;
+    }
+
+    setLoading(true);
+
+    const response = await api.get("/v1/dialog", {
+      headers: { page, limit: 10 },
+    });
+
+    const filterData = await filterDialogs(response);
+
+    setDialogs([...dialogs, ...filterData]);
+    setTotal(response.headers["x-total-count"]);
+    setPage(page + 1);
+    setLoading(false);
   };
 
+  const showInterstitial = async () => {
+    await AdMobInterstitial.setAdUnitID(
+      "ca-app-pub-8494738329887200/2700223912"
+      //"ca-app-pub-3940256099942544/1033173712"
+    );
+    await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
+    await AdMobInterstitial.showAdAsync();
+  };
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <HeaderBackButton onPress={showInterstitial} title="Update count" />
+      ),
+    });
+  }, [navigation]);
+
+  const loadAdMobInterstitalEvents = () => {
+    AdMobInterstitial.addEventListener("interstitialDidFailToLoad", () =>
+      navigation.navigate("Manage Dialogues")
+    );
+
+    AdMobInterstitial.addEventListener("interstitialDidClose", () =>
+      navigation.navigate("Manage Dialogues")
+    );
+    AdMobInterstitial.addEventListener("interstitialWillLeaveApplication", () =>
+      navigation.navigate("Manage Dialogues")
+    );
+  };
+
+  const setTestDevice = async () => await setTestDeviceIDAsync("EMULATOR");
+
   useEffect(() => {
+    setTestDevice();
+    loadAdMobInterstitalEvents();
     loadData();
   }, []);
 
   return (
     <View>
-      {data.length > 0 ? (
+      {dialogs.length > 0 ? (
         <FlatList
-          data={data}
+          data={dialogs}
           showsVerticalScrollIndicator={false}
           onEndReached={loadData}
           onEndReachedThreshold={0.2}
