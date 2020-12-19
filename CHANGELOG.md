@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/knowledge-corporation/chevy-chatbot/compare/v1.0.3...v1.1.0) (2020-12-19)
+
+
+### Features
+
+* add AdMobInterstitial ([7bee5df](https://github.com/knowledge-corporation/chevy-chatbot/commit/7bee5df376c88b4f59ef99515abdb42596e2cc74))
+
+
+### Bug Fixes
+
+* add infinite scroll ([7a89496](https://github.com/knowledge-corporation/chevy-chatbot/commit/7a894960ab2d0fbb67bcffd6000638584529ceed))
+* adjust to the responsive login and register screen ([cc876e7](https://github.com/knowledge-corporation/chevy-chatbot/commit/cc876e751ee071b043957e0b581270ed18f2841e))
+
 ### [1.0.3](https://github.com/knowledge-corporation/chevy-chatbot/compare/v1.0.2...v1.0.3) (2020-12-17)
 
 ### Features
