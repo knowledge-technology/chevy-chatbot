@@ -111,14 +111,20 @@ export default App = () => {
 
   useEffect(() => {
     const getTheme = async () => {
-      const themeData = await AsyncStorage.getItem("Dark");
-      if (themeData === null) {
+      try {
+        const themeData = await AsyncStorage.getItem("Dark");
+        if (themeData === null) {
+          const { dark } = { dark: false };
+
+          setTheme(dark);
+        } else {
+          const { dark } = JSON.parse(themeData);
+
+          setTheme(dark);
+        }
+      } catch (err) {
+        console.log(err);
         const { dark } = { dark: false };
-
-        setTheme(dark);
-      } else {
-        const { dark } = JSON.parse(themeData);
-
         setTheme(dark);
       }
     };

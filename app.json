@@ -2,7 +2,7 @@
   "expo": {
     "name": "Chevy Chabot",
     "slug": "chevy",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "description": "The Chevy Chatbot aims to provide users with the possibility of conducting dialogues in English where the conversations and answers are registered and evaluated by the users themselves.",
@@ -14,6 +14,7 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
+      "enabled": false,
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
@@ -27,7 +28,7 @@
       },
       "permissions": [],
       "package": "com.knowledge.chevy",
-      "versionCode": 5,
+      "versionCode": 6,
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-8494738329887200~4318815237"
       }

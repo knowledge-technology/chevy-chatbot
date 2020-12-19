@@ -25,4 +25,4 @@ jobs:
         run: yarn 
         
       - name: Build apk  
-        run: expo publish
+        run: expo build:android -t apk

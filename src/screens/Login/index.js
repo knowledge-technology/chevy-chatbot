@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Alert, Keyboard } from "react-native";
+import { View, Text, Alert, Keyboard, SafeAreaView } from "react-native";
 import { Input } from "react-native-elements";
 import { Button } from "react-native-paper";
 import * as Facebook from "expo-facebook";
@@ -10,7 +10,6 @@ import { useTheme } from "@react-navigation/native";
 import api from "../../services/api";
 
 import styles from "./styles";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
