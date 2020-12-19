@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     paddingTop: metrics.basePadding,
   },
   title: {
+    flex: 0.6,
     marginVertical: metrics.doubleBaseMargin,
     marginHorizontal: metrics.baseMargin,
     fontSize: fonts.bigger,
