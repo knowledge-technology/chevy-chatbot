@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image, Text, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { HeaderBackButton } from "@react-navigation/stack";
+import { AdMobInterstitial, setTestDeviceIDAsync } from "expo-ads-admob";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -8,11 +11,13 @@ import imageDefalt from "../../../assets/not_found.png";
 
 import api from "../../../services/api";
 
-export default function EvaluateDialogues({ route }) {
+export default function EvaluateDialogues() {
   const [dialogs, setDialogs] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  const navigation = useNavigation();
 
   async function filterDialogs(response) {
     const userId = await AsyncStorage.getItem("userId");
@@ -53,7 +58,41 @@ export default function EvaluateDialogues({ route }) {
     setLoading(false);
   };
 
+  const showInterstitial = async () => {
+    await AdMobInterstitial.setAdUnitID(
+      "ca-app-pub-8494738329887200/2700223912"
+      //"ca-app-pub-3940256099942544/1033173712"
+    );
+    await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
+    await AdMobInterstitial.showAdAsync();
+  };
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <HeaderBackButton onPress={showInterstitial} title="Update count" />
+      ),
+    });
+  }, [navigation]);
+
+  const loadAdMobInterstitalEvents = () => {
+    AdMobInterstitial.addEventListener("interstitialDidFailToLoad", () =>
+      navigation.navigate("Manage Dialogues")
+    );
+
+    AdMobInterstitial.addEventListener("interstitialDidClose", () =>
+      navigation.navigate("Manage Dialogues")
+    );
+    AdMobInterstitial.addEventListener("interstitialWillLeaveApplication", () =>
+      navigation.navigate("Manage Dialogues")
+    );
+  };
+
+  const setTestDevice = async () => await setTestDeviceIDAsync("EMULATOR");
+
   useEffect(() => {
+    setTestDevice();
+    loadAdMobInterstitalEvents();
     loadData();
   }, []);
 
