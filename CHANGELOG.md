@@ -4,31 +4,19 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.0.3](https://github.com/knowledge-corporation/chevy-chatbot/compare/v1.0.2...v1.0.3) (2020-12-17)
 
+### Features
+
+- update api usages ([bfd06e8](https://github.com/knowledge-corporation/chevy-chatbot/commit/bfd06e8dc1f56a097c506a9192469c919184ef4e))
 
 ### Features
 
-* update api usages ([bfd06e8](https://github.com/knowledge-corporation/chevy-chatbot/commit/bfd06e8dc1f56a097c506a9192469c919184ef4e))
-
-## [1.1.0](https://github.com/knowledge-corporation/chevy-chatbot/compare/v1.0.2...v1.1.0) (2020-12-17)
-
-
-### Features
-
-* update api usages ([bfd06e8](https://github.com/knowledge-corporation/chevy-chatbot/commit/bfd06e8dc1f56a097c506a9192469c919184ef4e))
-
-## [1.1.0](https://github.com/knowledge-corporation/chevy-chatbot/compare/v1.0.2...v1.1.0) (2020-12-17)
-
-
-### Features
-
-* update api usages ([bfd06e8](https://github.com/knowledge-corporation/chevy-chatbot/commit/bfd06e8dc1f56a097c506a9192469c919184ef4e))
+- update api usages ([bfd06e8](https://github.com/knowledge-corporation/chevy-chatbot/commit/bfd06e8dc1f56a097c506a9192469c919184ef4e))
 
 ### [1.0.2](https://github.com/knowledge-corporation/chevy-chatbot/compare/v1.0.1...v1.0.2) (2020-12-07)
 
-
 ### Bug Fixes
 
-* fix int bug ([e54e745](https://github.com/knowledge-corporation/chevy-chatbot/commit/e54e7452ac6a11d6f3d941eb972374c20ea0312c))
+- fix int bug ([e54e745](https://github.com/knowledge-corporation/chevy-chatbot/commit/e54e7452ac6a11d6f3d941eb972374c20ea0312c))
 
 ### [1.0.1](https://github.com/knowledge-corporation/chevy-chatbot/compare/v1.0.0...v1.0.1) (2020-12-07)
 
