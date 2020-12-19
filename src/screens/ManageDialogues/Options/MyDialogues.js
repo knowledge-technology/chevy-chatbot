@@ -8,31 +8,48 @@ import api from "../../../services/api";
 import imageDefalt from "../../../assets/not_found.png";
 
 export default function MyDialogues() {
-  const [data, setData] = useState([]);
-  const getData = async () => {
-    try {
-      const userId = await AsyncStorage.getItem("userId");
+  const [dialogs, setDialogs] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-      const response = await api.get("/v1/dialog", {
-        params: {
-          owner: userId,
-        },
-      });
-
-      setData(response.data.data);
-    } catch (err) {
-      console.log(err);
+  const loadData = async () => {
+    if (loading) {
+      return;
     }
+    if (total > 0 && dialogs.length === total) {
+      return;
+    }
+
+    setLoading(true);
+
+    const userId = await AsyncStorage.getItem("userId");
+
+    const response = await api.get("/v1/dialog", {
+      params: {
+        owner: userId,
+      },
+      headers: { page, limit: 10 },
+    });
+
+    setDialogs([...dialogs, ...response.data.data]);
+    setTotal(response.headers["x-total-count"]);
+    setPage(page + 1);
+    setLoading(false);
   };
   useEffect(() => {
-    getData();
+    loadData();
   }, []);
 
   return (
     <View>
-      {data.length > 0 ? (
+      {dialogs.length > 0 ? (
         <FlatList
-          data={data}
+          data={dialogs}
+          showsVerticalScrollIndicator={false}
+          onEndReached={loadData}
+          onEndReachedThreshold={0.2}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Dialog
               speech={item.speech}
@@ -43,7 +60,6 @@ export default function MyDialogues() {
               editable={false}
             />
           )}
-          keyExtractor={(item) => item.id}
         />
       ) : (
         <View style={styles.viewDefault}>

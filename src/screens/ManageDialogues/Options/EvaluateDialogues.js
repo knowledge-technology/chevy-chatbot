@@ -9,15 +9,14 @@ import imageDefalt from "../../../assets/not_found.png";
 import api from "../../../services/api";
 
 export default function EvaluateDialogues({ route }) {
-  const [data, setData] = useState([]);
+  const [dialogs, setDialogs] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  const loadData = async () => {
+  async function filterDialogs(response) {
     const userId = await AsyncStorage.getItem("userId");
     const filterData = [];
-    const response = await api.get("/v1/dialog", {
-      headers: { page: 1, limit: 10 },
-    });
-
     for (var i = 0; i < response.data.data.length; i++) {
       if (
         !(
@@ -29,7 +28,29 @@ export default function EvaluateDialogues({ route }) {
         filterData.push(response.data.data[i]);
       }
     }
-    setData(filterData);
+    return filterData;
+  }
+
+  const loadData = async () => {
+    if (loading) {
+      return;
+    }
+    if (total > 0 && dialogs.length === total) {
+      return;
+    }
+
+    setLoading(true);
+
+    const response = await api.get("/v1/dialog", {
+      headers: { page, limit: 10 },
+    });
+
+    const filterData = await filterDialogs(response);
+
+    setDialogs([...dialogs, ...filterData]);
+    setTotal(response.headers["x-total-count"]);
+    setPage(page + 1);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -38,9 +59,9 @@ export default function EvaluateDialogues({ route }) {
 
   return (
     <View>
-      {data.length > 0 ? (
+      {dialogs.length > 0 ? (
         <FlatList
-          data={data}
+          data={dialogs}
           showsVerticalScrollIndicator={false}
           onEndReached={loadData}
           onEndReachedThreshold={0.2}
