@@ -127,13 +127,13 @@ const Dialog = (props) => {
 
   const previewActions = (
     <Card.Actions style={styles.cardActions}>
-      <Caption style={{ color: colors.textSecondary }}>
+      <Caption style={[styles.previewItems, { color: colors.textSecondary }]}>
         Created at: {Moment(new Date(createdAt)).locale("en").format("MM/YYYY")}
       </Caption>
-      <Caption style={{ color: colors.textSecondary }}>
+      <Caption style={[styles.previewItems, { color: colors.textSecondary }]}>
         Status: {status}
       </Caption>
-      <Caption style={{ color: colors.textSecondary }}>
+      <Caption style={[styles.previewItems, { color: colors.textSecondary }]}>
         Approval Rate: {approvalRate}%
       </Caption>
     </Card.Actions>

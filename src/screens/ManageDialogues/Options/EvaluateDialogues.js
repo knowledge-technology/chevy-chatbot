@@ -59,6 +59,7 @@ export default function EvaluateDialogues() {
   };
 
   const showInterstitial = async () => {
+    navigation.navigate("Manage Dialogues");
     await AdMobInterstitial.setAdUnitID(
       "ca-app-pub-8494738329887200/2700223912"
       //"ca-app-pub-3940256099942544/1033173712"
