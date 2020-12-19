@@ -76,24 +76,10 @@ export default function EvaluateDialogues() {
     });
   }, [navigation]);
 
-  const loadAdMobInterstitalEvents = () => {
-    AdMobInterstitial.addEventListener("interstitialDidFailToLoad", () =>
-      navigation.navigate("Manage Dialogues")
-    );
-
-    AdMobInterstitial.addEventListener("interstitialDidClose", () =>
-      navigation.navigate("Manage Dialogues")
-    );
-    AdMobInterstitial.addEventListener("interstitialWillLeaveApplication", () =>
-      navigation.navigate("Manage Dialogues")
-    );
-  };
-
   const setTestDevice = async () => await setTestDeviceIDAsync("EMULATOR");
 
   useEffect(() => {
     setTestDevice();
-    loadAdMobInterstitalEvents();
     loadData();
   }, []);
 
