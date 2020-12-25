@@ -12,6 +12,7 @@ import imageDefalt from "../../../assets/not_found.png";
 import api from "../../../services/api";
 
 export default function EvaluateDialogues() {
+  const limit = 20;
   const [dialogs, setDialogs] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -21,18 +22,13 @@ export default function EvaluateDialogues() {
 
   async function filterDialogs(response) {
     const userId = await AsyncStorage.getItem("userId");
-    const filterData = [];
-    for (var i = 0; i < response.data.data.length; i++) {
-      if (
-        !(
-          response.data.data[i].approvals.includes(userId) ||
-          response.data.data[i].disapprovals.includes(userId) ||
-          response.data.data[i].owner === userId
-        )
-      ) {
-        filterData.push(response.data.data[i]);
-      }
-    }
+    const filterData = response.data.data.filter((dialog) => {
+      return !(
+        dialog.approvals.includes(userId) ||
+        dialog.disapprovals.includes(userId) ||
+        dialog.owner === userId
+      );
+    });
     return filterData;
   }
 
@@ -40,14 +36,15 @@ export default function EvaluateDialogues() {
     if (loading) {
       return;
     }
-    if (total > 0 && dialogs.length === total) {
+
+    if (total > 0 && page > Math.ceil(total / limit)) {
       return;
     }
 
     setLoading(true);
 
     const response = await api.get("/v1/dialog", {
-      headers: { page, limit: 10 },
+      headers: { page, limit },
     });
 
     const filterData = await filterDialogs(response);
