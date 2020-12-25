@@ -62,7 +62,7 @@ const Register = ({ navigation }) => {
     >
       <View style={styles.form}>
         <Text style={[styles.title, { color: colors.text }]}>
-          Create new account
+          Create account
         </Text>
         <Input
           style={{ color: colors.text }}
