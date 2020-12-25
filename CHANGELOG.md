@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/knowledge-corporation/chevy-chatbot/compare/v1.0.4...v1.0.5) (2020-12-25)
+
+
+### Bug Fixes
+
+* edit title of register ([a36c225](https://github.com/knowledge-corporation/chevy-chatbot/commit/a36c22512f0ca10a502d7724a8f4dd4e483a5305))
+* get current year and api version ([0675a53](https://github.com/knowledge-corporation/chevy-chatbot/commit/0675a535bf4725272decddd46ec9eb587d97e1cb))
+* increase limit and refactor ([2c3cb5a](https://github.com/knowledge-corporation/chevy-chatbot/commit/2c3cb5a97b1388579c080b549d766ef29d28864a))
+
 ### [1.0.4](https://github.com/knowledge-corporation/chevy-chatbot/compare/v1.0.3...v1.0.4) (2020-12-19)
 
 ### Features
