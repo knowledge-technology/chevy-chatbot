@@ -112,7 +112,7 @@ const Chat = () => {
   return (
     <View style={styles.container}>
       <AdMobBanner
-        adUnitID="ca-app-pub-8494738329887200/1370766736" //"ca-app-pub-3940256099942544/6300978111"
+        adUnitID="ca-app-pub-4790228310824010/7367998133" //"ca-app-pub-3940256099942544/6300978111"
         didFailToReceiveAdWithError={bannerError}
       />
       <ImageBackground
