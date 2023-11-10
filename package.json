@@ -18,7 +18,7 @@
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
     "@unimodules/core": "^5.5.1",
-    "axios": "0.18.0",
+    "axios": "1.6.0",
     "dayjs": "^1.9.6",
     "expo": "~39.0.2",
     "expo-ads-admob": "^8.3.0",
